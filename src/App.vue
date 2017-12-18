@@ -9,12 +9,7 @@
 </template>
 
 <script>
-import VueDrr from './components/vue-drr'
-
 export default {
-  name: 'app',
-  components: {
-    'vue-drr': VueDrr
-  }
+  name: 'app'
 }
 </script>

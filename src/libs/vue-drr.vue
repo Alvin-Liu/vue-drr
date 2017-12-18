@@ -34,7 +34,7 @@
 <script>
 export default {
   replace: true,
-  name: 'vue-draggable-resizable',
+  name: 'vue-drr',
   props: {
     active: {
       type: Boolean, default: false
