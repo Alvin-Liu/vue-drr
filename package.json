@@ -1,6 +1,6 @@
 {
   "name": "vue-drr",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Vue2 component for draggable, resizable, rotateable elements",
   "author": "alvin-liu <642451695@qq.com>",
   "main": "dist/index.js",

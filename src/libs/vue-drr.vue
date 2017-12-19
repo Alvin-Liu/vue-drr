@@ -172,7 +172,7 @@ export default {
       left: this.x,
       width: this.w,
       height: this.h,
-      rotate: this.angle,
+      rotateAngle: this.angle,
       resizing: false,
       dragging: false,
       rotating: false,
@@ -227,6 +227,7 @@ export default {
       }
     },
     deselect: function (e) {
+      e.preventDefault()  // 防止拖动时文字被选中
       this.mouseX = e.pageX || e.clientX + document.documentElement.scrollLeft
       this.mouseY = e.pageY || e.clientY + document.documentElement.scrollTop
 
@@ -329,9 +330,8 @@ export default {
         const origin = this.origin
         const startAngle = Math.atan2(startY - origin.y, startX - origin.x)
         const endAngle = Math.atan2(this.lastMouseY - origin.y, this.lastMouseX - origin.x)
-        this.rotate += (endAngle - startAngle) * 180 / Math.PI
-        // this.rotate += (Math.PI / 2 - (startAngle + endAngle)) * 180 / Math.PI
-        // this.rotate = endAngle
+        this.rotateAngle += (endAngle - startAngle) * 180 / Math.PI
+        this.$emit('rotating', this.rotateAngle)
       }
     },
     handleUp: function (e) {
@@ -347,7 +347,7 @@ export default {
 
       if (this.rotating) {
         this.rotating = false
-        this.$emit('rotatstop', this.left, this.top)
+        this.$emit('rotatestop', this.rotateAngle)
       }
 
       this.elmX = this.left
@@ -368,7 +368,7 @@ export default {
         width: this.width + 'px',
         height: this.height + 'px',
         zIndex: this.zIndex,
-        transform: 'rotate(' + this.rotate + 'deg)'
+        transform: 'rotate(' + this.rotateAngle + 'deg)'
       }
     }
   },
