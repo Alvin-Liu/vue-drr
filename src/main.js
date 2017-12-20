@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import vueDrr from './libs/index.js'
+import vueDrr from './index.js'
 
 Vue.use(vueDrr)
 
