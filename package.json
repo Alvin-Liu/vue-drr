@@ -1,9 +1,9 @@
 {
   "name": "vue-drr",
-  "version": "1.0.2",
-  "description": "A Vue2 component for draggable, resizable, rotateable elements",
+  "version": "1.0.5",
+  "description": "A Vue2 component for draggable, resizable, rotatable elements",
   "author": "alvin-liu <642451695@qq.com>",
-  "main": "dist/index.js",
+  "main": "dist/vue-drr.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
@@ -13,7 +13,10 @@
     "drr",
     "drag",
     "resize",
-    "rotate"
+    "rotate",
+    "draggable",
+    "resizable",
+    "rotatable"
   ],
   "license": "MIT",
   "repository": {

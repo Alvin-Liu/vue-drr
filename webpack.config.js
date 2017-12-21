@@ -3,12 +3,13 @@ var webpack = require('webpack')
 
 module.exports = {
   entry: {
-    // index: './src/main.js', // 项目入口
-    index: './src/index.js'
+    index: './src/main.js', // 项目入口
+    // index: './src/index.js'
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: '[name].js',
+    publicPath: '/dist/',
+    filename: 'vue-drr.js',
     library: 'VueDrr',
     libraryTarget: 'umd'
   },
@@ -41,10 +42,9 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.vue']
-  },
-  externals: {
-    vue: 'vue',
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js'
+    }
   },
   devServer: {
     historyApiFallback: true,

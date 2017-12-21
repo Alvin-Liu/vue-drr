@@ -32,6 +32,47 @@
 </template>
 
 <script>
+// 节流
+const throttle = (func, wait, options) => {
+  var timeout, context, args
+  var previous = 0
+  if (!options) options = {}
+
+  var later = function () {
+    previous = options.leading === false ? 0 : new Date().getTime()
+    timeout = null
+    func.apply(context, args)
+    if (!timeout) context = args = null
+  }
+
+  var throttled = function () {
+    var now = new Date().getTime()
+    if (!previous && options.leading === false) previous = now
+    var remaining = wait - (now - previous)
+    context = this
+    args = arguments
+    if (remaining <= 0 || remaining > wait) {
+      if (timeout) {
+        clearTimeout(timeout)
+        timeout = null
+      }
+      previous = now
+      func.apply(context, args)
+      if (!timeout) context = args = null
+    } else if (!timeout && options.trailing !== false) {
+      timeout = setTimeout(later, remaining)
+    }
+  }
+
+  throttled.cancel = function () {
+    clearTimeout(timeout)
+    previous = 0
+    timeout = null
+  }
+
+  return throttled
+}
+
 export default {
   replace: true,
   name: 'vue-drr',
@@ -254,7 +295,14 @@ export default {
 
       this.resizing = true
     },
-    handleMove: function (e) {
+    getOrigin: function () {
+      const rect = this.$el.getBoundingClientRect()
+      return {
+        x: (rect.left + rect.right) / 2,
+        y: (rect.bottom + rect.top) / 2
+      }
+    },
+    handleMove: throttle(function (e) {
       const startX = this.lastMouseX
       const startY = this.lastMouseY
 
@@ -327,13 +375,13 @@ export default {
 
         this.$emit('dragging', this.left, this.top)
       } else if (this.rotating) {
-        const origin = this.origin
+        const origin = this.getOrigin()
         const startAngle = Math.atan2(startY - origin.y, startX - origin.x)
         const endAngle = Math.atan2(this.lastMouseY - origin.y, this.lastMouseX - origin.x)
         this.rotateAngle += (endAngle - startAngle) * 180 / Math.PI
         this.$emit('rotating', this.rotateAngle)
       }
-    },
+    }, 30),
     handleUp: function (e) {
       this.handle = null
       if (this.resizing) {
@@ -355,12 +403,6 @@ export default {
     }
   },
   computed: {
-    origin: function () {
-      return {
-        x: this.left + this.width / 2,
-        y: this.top + this.width / 2
-      }
-    },
     style: function () {
       return {
         top: this.top + 'px',
@@ -414,7 +456,7 @@ export default {
     height: $circle-size * 3;
     // margin-left: -.5px;
     background-color: $main-color;
-    cursor: url(../assets/mouserotate.png) 16 16, default;
+    cursor: url(../assets/mouserotate.png) 8 8, default;
     &:after {
       content: ' ';
       top: 0;

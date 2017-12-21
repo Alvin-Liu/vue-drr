@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
-import vueDrr from './index.js'
+// import vueDrr from './index.js'
 
-Vue.use(vueDrr)
+// Vue.use(vueDrr)
 
 Vue.config.productionTip = false
 

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div style="height: 500px; width: 500px; margin: 20px; border: 1px solid red; position: relative;">
+    <div class="container">
       <vue-drr 
         :x="x" 
         :y="y" 
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import vueDrr from './index.js'
 export default {
   name: 'app',
   data: function () {
@@ -44,6 +45,20 @@ export default {
     handleRotating: function (angle) {
       this.angle = angle
     }
+  },
+  components: {
+    vueDrr
   }
 }
 </script>
+<style lang="scss">
+  .container {
+    position: absolute;
+    top: 30px;
+    left: 60px;
+    width: 500px; 
+    height: 500px; 
+    margin: 20px; 
+    border: 1px solid red; 
+  }
+</style>
