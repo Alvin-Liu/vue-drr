@@ -13,7 +13,6 @@
     }"
   >
     <slot></slot>
-    
     <div
       v-if="rotatable"
       class="z-rotateable-handle"
@@ -32,47 +31,6 @@
 </template>
 
 <script>
-// 节流
-const throttle = (func, wait, options) => {
-  var timeout, context, args
-  var previous = 0
-  if (!options) options = {}
-
-  var later = function () {
-    previous = options.leading === false ? 0 : new Date().getTime()
-    timeout = null
-    func.apply(context, args)
-    if (!timeout) context = args = null
-  }
-
-  var throttled = function () {
-    var now = new Date().getTime()
-    if (!previous && options.leading === false) previous = now
-    var remaining = wait - (now - previous)
-    context = this
-    args = arguments
-    if (remaining <= 0 || remaining > wait) {
-      if (timeout) {
-        clearTimeout(timeout)
-        timeout = null
-      }
-      previous = now
-      func.apply(context, args)
-      if (!timeout) context = args = null
-    } else if (!timeout && options.trailing !== false) {
-      timeout = setTimeout(later, remaining)
-    }
-  }
-
-  throttled.cancel = function () {
-    clearTimeout(timeout)
-    previous = 0
-    timeout = null
-  }
-
-  return throttled
-}
-
 export default {
   replace: true,
   name: 'vue-drr',
@@ -136,14 +94,6 @@ export default {
       default: 0,
       validator: function (val) {
         return typeof val === 'number'
-      }
-    },
-    z: {
-      type: [ String, Number ],
-      default: 'auto',
-      validator: function (val) {
-        let valid = (typeof val === 'string') ? val === 'auto' : val >= 0
-        return valid
       }
     },
     handles: {
@@ -218,8 +168,7 @@ export default {
       dragging: false,
       rotating: false,
       enabled: this.active,
-      handle: null,
-      zIndex: this.z
+      handle: null
     }
   },
   methods: {
@@ -247,11 +196,10 @@ export default {
         this.elmH = this.height
       }
 
-      this.$emit('resizing', this.left, this.top, this.width, this.height)
+      // this.$emit('resizing', this.left, this.top, this.width, this.height)
     },
     elmDown: function (e) {
       const target = e.target || e.srcElement
-
       if (this.$el.contains(target)) {
         this.reviewDimensions()
 
@@ -261,7 +209,6 @@ export default {
           this.$emit('activated')
           this.$emit('update:active', true)
         }
-
         if (this.draggable) {
           this.dragging = true
         }
@@ -302,7 +249,7 @@ export default {
         y: (rect.bottom + rect.top) / 2
       }
     },
-    handleMove: throttle(function (e) {
+    handleMove: function (e) {
       const startX = this.lastMouseX
       const startY = this.lastMouseY
 
@@ -378,10 +325,10 @@ export default {
         const origin = this.getOrigin()
         const startAngle = Math.atan2(startY - origin.y, startX - origin.x)
         const endAngle = Math.atan2(this.lastMouseY - origin.y, this.lastMouseX - origin.x)
-        this.rotateAngle += (endAngle - startAngle) * 180 / Math.PI
+        this.rotateAngle += Math.round((endAngle - startAngle) * 180 / Math.PI)
         this.$emit('rotating', this.rotateAngle)
       }
-    }, 30),
+    },
     handleUp: function (e) {
       this.handle = null
       if (this.resizing) {
@@ -409,7 +356,6 @@ export default {
         left: this.left + 'px',
         width: this.width + 'px',
         height: this.height + 'px',
-        zIndex: this.zIndex,
         transform: 'rotate(' + this.rotateAngle + 'deg)'
       }
     }
@@ -417,11 +363,6 @@ export default {
   watch: {
     active: function (val) {
       this.enabled = val
-    },
-    z: function (val) {
-      if (val >= 0 || val === 'auto') {
-        this.zIndex = val
-      }
     }
   }
 }
@@ -429,10 +370,16 @@ export default {
 
 <style lang="scss">
   $main-color: #32a6d0;
-  $circle-size: 8px;
+  $circle-size: 12px;
 
   .z-drr-container {
     position: absolute;
+    *, *:before, *:after {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+    }
   }
 
   .z-draggable:hover {
@@ -454,14 +401,14 @@ export default {
     top: -$circle-size * 3;
     width: 1px;
     height: $circle-size * 3;
-    // margin-left: -.5px;
+    margin-left: -.5px;
     background-color: $main-color;
     cursor: url(../assets/mouserotate.png) 8 8, default;
     &:after {
       content: ' ';
       top: 0;
       left: 0;
-      margin-left: -$circle-size/2;
+      margin-left: -($circle-size - 1)/2;
       @include circle($main-color);
     }
   }
@@ -566,5 +513,9 @@ export default {
       left: 50%;
       margin-left: -$circle-size/2;
     }
+  }
+
+  .z-active {
+    z-index: 999;
   }
 </style>
