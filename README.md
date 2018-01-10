@@ -5,6 +5,8 @@
 
 > Based on and offering all features of [vue-draggable-resizable](https://github.com/mauricius/vue-draggable-resizable "vue-draggable-resizable")
 
+英文 | [中文](./README-zh.md)
+
 ## Table of Contents
 
 * [Demo](#demo)
