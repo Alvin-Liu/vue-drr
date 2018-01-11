@@ -5,7 +5,7 @@
 
 > 基于 [vue-draggable-resizable](https://github.com/mauricius/vue-draggable-resizable "vue-draggable-resizable")，并优化了部分细节，增加了旋转
 
-中文 | [英文](./README.md)
+中文 | [ENGLISH](./README.md)
 
 ## 目录
 
