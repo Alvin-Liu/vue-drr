@@ -215,7 +215,9 @@ export default {
       }
     },
     deselect: function (e) {
-      e.preventDefault()  // 防止拖动时文字被选中
+      if (this.$el.contains(e.target)) {
+        e.preventDefault()  // 防止拖动时文字被选中
+      }
       this.mouseX = e.pageX || e.clientX + document.documentElement.scrollLeft
       this.mouseY = e.pageY || e.clientY + document.documentElement.scrollTop
 
