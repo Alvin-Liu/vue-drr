@@ -1,6 +1,15 @@
 const path = require('path')
 const webpack = require('webpack')
 const NODE_ENV = process.env.NODE_ENV
+console.log(NODE_ENV)
+const getPublicPath = () => {
+  if (NODE_ENV === 'production') {
+    return path.resolve(__dirname, './dist')
+  } else if (NODE_ENV === 'dist') {
+    return path.resolve(__dirname, './example')
+  }
+  return '/'
+}
 
 module.exports = {
   entry: {
@@ -9,10 +18,8 @@ module.exports = {
       : './src/main.js'
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: NODE_ENV === 'production'
-      ? path.resolve(__dirname, './dist')
-      : '/',
+    path: getPublicPath(),
+    publicPath: getPublicPath(),
     filename: 'vue-drr.js',
     library: 'VueDrr',
     libraryTarget: 'umd'
@@ -60,7 +67,7 @@ module.exports = {
   }
 }
 
-if (NODE_ENV === 'production') {
+if (NODE_ENV === 'production' || NODE_ENV === 'dist') {
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {

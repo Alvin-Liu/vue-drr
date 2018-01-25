@@ -17,7 +17,7 @@ ENGLISH | [中文](./README-zh.md)
 
 ### Demo
 
-[Demo](https://alvin-liu.github.io/vue-drr/)
+[Demo](https://alvin-liu.github.io/vue-drr/example/index.html)
 
 ---
 
