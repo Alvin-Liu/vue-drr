@@ -124,9 +124,7 @@ export default {
     }
   },
   created () {
-    this.parentX = 0
     this.parentW = 9999
-    this.parentY = 0
     this.parentH = 9999
 
     this.lastMouseX = 0
@@ -286,8 +284,8 @@ export default {
         if (this.handle.indexOf('n') >= 0) {
           if (this.elmH - dY < this.minh) {
             diffY = this.elmH - this.minh
-          } else if (this.elmY + dY < this.parentY) {
-            diffY = this.parentY - this.elmY
+          } else if (this.elmY + dY < 0) {
+            diffY = -this.elmY
           }
           this.mouseOffY = dY - diffY
           this.elmY += diffY
@@ -307,8 +305,8 @@ export default {
         if (this.handle.indexOf('w') >= 0) {
           if (this.elmW - dX < this.minw) {
             diffX = this.elmW - this.minw
-          } else if (this.elmX + dX < this.parentX) {
-            diffX = this.parentX - this.elmX
+          } else if (this.elmX + dX < 0) {
+            diffX = -this.elmX
           }
           this.mouseOffX = dX - diffX
           this.elmX += diffX
