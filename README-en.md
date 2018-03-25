@@ -1,18 +1,16 @@
 
 <h1 align="center">VueDRR</h1>
 
-> 一个可以拖动、拉伸、旋转的Vue2 组件
+> A Vue2 component for draggable, resizable, rotateable elements.Based on and offering all features of [vue-draggable-resizable](https://github.com/mauricius/vue-draggable-resizable "vue-draggable-resizable")
 
-> 基于 [vue-draggable-resizable](https://github.com/mauricius/vue-draggable-resizable "vue-draggable-resizable")，并优化了部分细节，增加了旋转
+ENGLISH | [中文](./README.md)
 
-中文 | [ENGLISH](./README.md)
-
-## 目录
+## Table of Contents
 
 * [Demo](#demo)
-* [安装和基本用法](#安装和基本用法)
-  * [属性](#属性)
-  * [方法](#方法)
+* [Install and basic usage](#install-and-basic-usage)
+  * [Props](#props)
+  * [Events](#events)
 * [License](#license)
 
 ### Demo
@@ -21,14 +19,14 @@
 
 ---
 
-## 安装和基本用法
+## Install and basic usage
 
 ```bash
 $ npm install --save vue-drr
 ```
 
 
-注册组件
+Register the component
 
 ```js
 import Vue from 'vue'
@@ -37,7 +35,7 @@ import VueDrr from 'vue-drr'
 Vue.component('vue-drr', VueDrr)
 ```
 
-简单例子
+You may now use the component in your markup
 
 ```vue
 <template>
@@ -91,84 +89,84 @@ export default {
 </script>
 ```
 
-### 属性
+### Props
 
 #### active
 Type: `Boolean`<br>
 Required: `false`<br>
 Default: `false`
 
-定义组件选中状态，状态更新时，属性值同步变化
+Determines if the component should be active or not. The prop reacts to changes and also can be used with the `sync`[modifier](https://vuejs.org/v2/guide/components.html#sync-Modifier) to keep the state in sync with the parent.
 
 #### draggable
 Type: `Boolean`<br>
 Required: `false`<br>
 Default: `true`
 
-定义组件是否可以拖动
+Defines it the component should be draggable or not.
 
 #### resizable
 Type: `Boolean`<br>
 Required: `false`<br>
 Default: `true`
 
-定义组件是否可以拉伸
+Defines it the component should be resizable or not.
 
 #### rotatable
 Type: `Boolean`<br>
 Required: `false`<br>
 Default: `true`
 
-定义组件是否可以旋转
+Defines it the component should be rotatable or not.
 
 #### w
 Type: `Number`<br>
 Required: `false`<br>
 Default: `200`
 
-定义元素初始宽度
+Define the initial width of the element.
 
 #### h
 Type: `Number`<br>
 Required: `false`<br>
 Default: `200`
 
-定义元素初始高度
+Define the initial height of the element.
 
 #### minw
 Type: `Number`<br>
 Required: `false`<br>
 Default: `50`
 
-定义元素最小宽度
+Define the minimal width of the element.
 
 #### minh
 Type: `Number`<br>
 Required: `false`<br>
 Default: `50`
 
-定义元素最小高度
+Define the minimal height of the element.
 
 #### angle
 Type: `Number`<br>
 Required: `false`<br>
 Default: `0`
 
-定义元素初始角度
+Define the initial angle of the element
 
 #### x
 Type: `Number`<br>
 Required: `false`<br>
 Default: `0`
 
-定义元素初始水平位置
+Define the initial x position of the element.
 
 #### y
 Type: `Number`<br>
 Required: `false`<br>
 Default: `0`
 
-定义元素初始竖直位置
+Define the initial y position of the element.
 
 #### handles
 Type: `Array`<br>
@@ -180,95 +178,95 @@ Type: `String`<br>
 Required: `false`<br>
 Default: `both`
 
-定义元素在水平、竖直，或者两个方向上拖动
+Define the axis on which the element is draggable. Available values are `x`, `y` or `both`.
 
 #### grid
 Type: `Array`<br>
 Required: `false`<br>
 Default: `[1,1]`
 
-定义元素拖动网格
+Define the grid on which the element is snapped.
 
 #### parent
 Type: `Boolean`<br>
 Required: `false`<br>
 Default: `false`
 
-限制元素的移动和维度
+Restricts the movement and the dimensions of the element to the parent.
 
 ---
 
-### 方法
+### Events
 
 #### activated
 
 Required: `false`<br>
-参数: `-`
+Parameters: `-`
 
-组件上按下鼠标触发
+Called whenever the component gets clicked, in order to show handles.
 
 #### deactivated
 
 Required: `false`<br>
-参数: `-`
+Parameters: `-`
 
-组件外按下鼠标触发
+Called whenever the user clicks anywhere outside the component, in order to deactivate it.
 
 #### resizing
 
 Required: `false`<br>
-参数:
-* `left` 水平方向位置
-* `top` 竖直方向位置
-* `width` 元素宽度
-* `height` 元素高度
+Parameters:
+* `left` the X position of the element
+* `top` the Y position of the element
+* `width` the width of the element
+* `height` the height of the element
 
-组件拉伸时触发
+Called whenever the component gets resized.
 
 #### resizestop
 
 Required: `false`<br>
-参数:
-* `left` 水平方向位置
-* `top` 竖直方向位置
-* `width` 元素宽度
-* `height` 元素高度
+Parameters:
+* `left` the X position of the element
+* `top` the Y position of the element
+* `width` the width of the element
+* `height` the height of the element
 
-组件拉伸停止时触发
+Called whenever the component stops getting resized.
 
 #### dragging
 
 Required: `false`<br>
-参数:
-* `left` 水平方向位置
-* `top` 竖直方向位置
+Parameters:
+* `left` the X position of the element
+* `top` the Y position of the element
 
-组件拖动时触发
+Called whenever the component gets dragged.
 
 #### dragstop
 
 Required: `false`<br>
-参数:
-* `left` 水平方向位置
-* `top` 竖直方向位置
+Parameters:
+* `left` the X position of the element
+* `top` the Y position of the element
 
-组件拖动停止时触发
+Called whenever the component stops getting dragged.
 
 #### rotating
 
 Required: `false`<br>
-参数:
-* `angle` 旋转角度
+Parameters:
+* `angle` the angle of the element
 
-组件旋转时触发
+Called whenever the component gets rotated.
 
 #### rotatestop
 
 Required: `false`<br>
-参数:
-* `angle` 旋转角度
+Parameters:
+* `angle` the angle of the element
 
-组件旋转停止时触发
+Called whenever the component stops getting rotated.
 
 ## License
 
