@@ -324,10 +324,14 @@ export default {
         }
 
         this.left = (Math.round(this.elmX / this.grid[0]) * this.grid[0])
+        this.$emit('update:x', this.left)
         this.top = (Math.round(this.elmY / this.grid[1]) * this.grid[1])
+        this.$emit('update:y', this.top)
 
         this.width = (Math.round(this.elmW / this.grid[0]) * this.grid[0])
+        this.$emit('update:w', this.width)
         this.height = (Math.round(this.elmH / this.grid[1]) * this.grid[1])
+        this.$emit('update:h', this.height)
 
         this.$emit('resizing', this.left, this.top, this.width, this.height)
       } else if (this.dragging) {
@@ -352,9 +356,11 @@ export default {
         if (this.axis === 'x' || this.axis === 'both') {
           // 四舍五入取得当前所在格子数 * 每个格子的单位像素，保证每一个点子在格子上
           this.left = (Math.round(this.elmX / this.grid[0]) * this.grid[0])
+          this.$emit('update:x', this.left)
         }
         if (this.axis === 'y' || this.axis === 'both') {
           this.top = (Math.round(this.elmY / this.grid[1]) * this.grid[1])
+          this.$emit('update:y', this.top)
         }
 
         this.$emit('dragging', this.left, this.top)
@@ -363,6 +369,7 @@ export default {
         const lastAngle = Math.atan2(lastMouseY - origin.y, lastMouseX - origin.x)
         const currentAngle = Math.atan2(mouseY - origin.y, mouseX - origin.x)
         this.rotateAngle += Math.round((currentAngle - lastAngle) * 180 / Math.PI)
+        this.$emit('update:angle', this.rotateAngle)
         this.$emit('rotating', this.rotateAngle)
       }
     },

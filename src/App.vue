@@ -2,12 +2,13 @@
   <div id="app">
     <div class="container">
       <vue-drr 
-        :x="x" 
-        :y="y" 
-        :angle="angle" 
-        :w="width" 
-        :h="height" 
-        :parent="true" 
+        :x.sync="x"
+        :y.sync="y"
+        :angle.sync="angle"
+        :active.sync="active"
+        :w.sync="width"
+        :h.sync="height"
+        parent
         @dragging="handleDragging"
         @resizing="handleResizing"
         @rotating="handleRotating"
@@ -24,6 +25,7 @@ export default {
   name: 'app',
   data: function () {
     return {
+      active: true,
       width: 200,
       height: 200,
       x: 50,
@@ -33,17 +35,13 @@ export default {
   },
   methods: {
     handleResizing: function (x, y, width, height) {
-      this.x = x
-      this.y = y
-      this.width = width
-      this.height = height
+      console.log('x:' + x, 'y:' + y, 'w:' + width, 'h:' + height)
     },
     handleDragging: function (x, y) {
-      this.x = x
-      this.y = y
+      console.log('x:' + x, 'y:' + y)
     },
     handleRotating: function (angle) {
-      this.angle = angle
+      console.log('rotate:' + angle)
     }
   },
   components: {
